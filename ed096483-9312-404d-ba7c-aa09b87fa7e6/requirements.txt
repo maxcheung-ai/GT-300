@@ -1,0 +1,4 @@
+redis>=4.5
+httpx>=0.24
+# optional: openai, or your preferred LLM client
+openai>=1.0

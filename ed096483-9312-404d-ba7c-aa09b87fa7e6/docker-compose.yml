@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile.orchestrator
+    command: python orchestrator.py
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+
+  coder:
+    build:
+      context: .
+      dockerfile: Dockerfile.coder
+    command: python coder.py
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.tester
+    command: python tester.py
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
